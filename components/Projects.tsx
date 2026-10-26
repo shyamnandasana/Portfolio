@@ -9,10 +9,21 @@ import ProjectModal from './ProjectModal';
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [activeFilter, setActiveFilter] = useState<'all' | 'dotnet' | 'nextjs'>('all');
+
+  const filteredProjects = projectsData.filter((project) => {
+    if (activeFilter === 'dotnet') {
+      return project.technology.some(t => t.includes('.NET') || t.includes('C#') || t.includes('ADO.NET'));
+    }
+    if (activeFilter === 'nextjs') {
+      return project.technology.some(t => t.includes('Next.js'));
+    }
+    return true;
+  });
 
   return (
     <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-[var(--bg-secondary)]/50 border-y border-[var(--border-color)]">
-      <div className="max-w-7xl mx-auto space-y-12">
+      <div className="max-w-7xl mx-auto space-y-10">
         {/* Section Header */}
         <div className="text-center space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 text-sky-500 text-xs font-semibold uppercase tracking-wider">
@@ -24,11 +35,45 @@ export default function Projects() {
           <p className="max-w-2xl mx-auto text-base text-[var(--text-muted)]">
             Practical web applications and REST APIs built using .NET Core, C#, SQL Server, EF Core, and Next.js.
           </p>
+
+          {/* Filter Tabs */}
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-3">
+            <button
+              onClick={() => setActiveFilter('all')}
+              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                activeFilter === 'all'
+                  ? 'bg-sky-600 text-white shadow-sm shadow-sky-600/30'
+                  : 'bg-[var(--bg-card)] text-[var(--text-muted)] hover:text-[var(--text-main)] border border-[var(--border-color)]'
+              }`}
+            >
+              All Projects ({projectsData.length})
+            </button>
+            <button
+              onClick={() => setActiveFilter('dotnet')}
+              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                activeFilter === 'dotnet'
+                  ? 'bg-sky-600 text-white shadow-sm shadow-sky-600/30'
+                  : 'bg-[var(--bg-card)] text-[var(--text-muted)] hover:text-[var(--text-main)] border border-[var(--border-color)]'
+              }`}
+            >
+              ASP.NET Core & .NET (2)
+            </button>
+            <button
+              onClick={() => setActiveFilter('nextjs')}
+              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                activeFilter === 'nextjs'
+                  ? 'bg-sky-600 text-white shadow-sm shadow-sky-600/30'
+                  : 'bg-[var(--bg-card)] text-[var(--text-muted)] hover:text-[var(--text-main)] border border-[var(--border-color)]'
+              }`}
+            >
+              Next.js & PostgreSQL (1)
+            </button>
+          </div>
         </div>
 
         {/* Project Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projectsData.map((project) => (
+          {filteredProjects.map((project) => (
             <div
               key={project.id}
               className="group bg-[var(--bg-card)] rounded-2xl border border-[var(--border-color)] overflow-hidden hover:border-sky-500/50 transition-all duration-300 shadow-sm hover:shadow-xl flex flex-col justify-between"
@@ -36,7 +81,7 @@ export default function Projects() {
               <div className="space-y-5 p-6 sm:p-7">
 
                 {/* Header & Category */}
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-xs font-semibold text-sky-500 uppercase tracking-wider">
                       {project.category}
@@ -45,6 +90,11 @@ export default function Projects() {
                   <h3 className="text-xl sm:text-2xl font-bold text-[var(--text-main)] group-hover:text-sky-500 transition-colors">
                     {project.name}
                   </h3>
+                  {project.subtitle && (
+                    <p className="text-xs font-medium text-[var(--text-muted)]">
+                      {project.subtitle}
+                    </p>
+                  )}
                 </div>
 
                 {/* Short Description */}
@@ -84,7 +134,7 @@ export default function Projects() {
                   onClick={() => setSelectedProject(project)}
                   className="text-xs font-semibold text-[var(--text-muted)] hover:text-sky-500 flex items-center gap-1 transition-colors"
                 >
-                  <Info className="w-3.5 h-3.5" /> More Details
+                  <Info className="w-3.5 h-3.5" /> View Details
                 </button>
 
                 <a
