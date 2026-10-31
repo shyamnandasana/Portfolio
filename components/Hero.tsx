@@ -59,7 +59,7 @@ export default function Hero() {
           </a>
           <a
             href={personalInfo.resumePath}
-            download="Shyam-Resume.pdf"
+            download="Shyam Nandasana pdf.pdf"
             className="w-full sm:w-auto px-6 py-3.5 text-sm font-semibold rounded-xl text-[var(--text-main)] bg-[var(--bg-card)] border border-[var(--border-color)] hover:bg-[var(--bg-card-hover)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
           >
             <Download className="w-4 h-4 text-sky-500" />

@@ -42,7 +42,7 @@ export default function ResumeSection() {
           <div className="pt-4 relative z-10">
             <a
               href={personalInfo.resumePath}
-              download="Shyam_Nandasana_Resume.pdf"
+              download="Shyam Nandasana pdf.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-sm text-white bg-sky-600 hover:bg-sky-500 shadow-lg shadow-sky-600/25 hover:scale-105 active:scale-95 transition-all"
